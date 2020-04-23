@@ -1,0 +1,8 @@
+*.idea
+*.iml
+.project
+.settings/
+out/
+deploy/
+target/
+node_modules/
