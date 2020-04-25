@@ -12,7 +12,7 @@ class AdapterDecorator {
 
 class MyStringBuilder // extends StringBuilder
 {
-    private StringBuilder sb = new StringBuilder();
+    private StringBuilder sb;
 
     public MyStringBuilder() {
         sb = new StringBuilder();

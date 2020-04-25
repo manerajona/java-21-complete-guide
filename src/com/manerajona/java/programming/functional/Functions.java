@@ -51,8 +51,8 @@ public class Functions {
         System.out.println(incBy5.applyAsInt(10));
 
         // Consumer (do not return values)
-        Consumer<String> c1 = s -> s.toUpperCase();
-        Consumer<String> c2 = s -> System.out.println(s);
+        Consumer<String> c1 = String::toUpperCase;
+        Consumer<String> c2 = System.out::println;
         c1.andThen(c2).accept("Hello, World!");
     }
 
