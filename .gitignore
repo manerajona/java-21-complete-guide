@@ -6,3 +6,4 @@ out/
 deploy/
 target/
 node_modules/
+.DS_Store
