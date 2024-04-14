@@ -1,4 +1,4 @@
-package com.manerajona.java.designpatterns.solid;
+package com.manerajona.java.designprinciples.solid;
 
 import java.io.File;
 import java.io.PrintStream;

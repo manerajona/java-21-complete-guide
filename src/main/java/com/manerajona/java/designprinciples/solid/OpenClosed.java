@@ -1,4 +1,4 @@
-package com.manerajona.java.designpatterns.solid;
+package com.manerajona.java.designprinciples.solid;
 
 import java.util.List;
 import java.util.stream.Stream;
