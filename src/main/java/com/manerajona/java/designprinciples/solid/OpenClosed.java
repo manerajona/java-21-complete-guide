@@ -35,10 +35,10 @@ class OpenClosed {
 
         System.out.println("Large blue items:");
         bf.filter(products,
-                new AndSpecification<>(
-                        new ColorSpecification(Color.BLUE),
-                        new SizeSpecification(Size.LARGE)
-                ))
+                        new AndSpecification<>(
+                                new ColorSpecification(Color.BLUE),
+                                new SizeSpecification(Size.LARGE)
+                        ))
                 .forEach(
                         p -> System.out.println(" - " + p.name + " is large and blue")
                 );
@@ -92,7 +92,7 @@ interface Filter<T> {
 
 class ColorSpecification implements Specification<Product> {
 
-    private Color color;
+    private final Color color;
 
     public ColorSpecification(Color color) {
         this.color = color;
@@ -106,7 +106,7 @@ class ColorSpecification implements Specification<Product> {
 
 class SizeSpecification implements Specification<Product> {
 
-    private Size size;
+    private final Size size;
 
     public SizeSpecification(Size size) {
         this.size = size;
@@ -119,7 +119,7 @@ class SizeSpecification implements Specification<Product> {
 }
 
 class AndSpecification<T> implements Specification<T> {
-    private Specification<T>[] specs;
+    private final Specification<T>[] specs;
 
     @SafeVarargs
     public AndSpecification(Specification<T>... specs) {

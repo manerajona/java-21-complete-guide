@@ -2,11 +2,10 @@ package com.manerajona.java.designprinciples.solid;
 
 public class LiskovSubstitution {
     // maybe conform to ++
-    static void useIt(Rectangle r)
-    {
+    static void useIt(Rectangle r) {
         int width = r.getWidth();
         r.setHeight(10);
-        System.out.println("Expected area of " + (width*10) + ", got " + r.getArea());
+        System.out.println("Expected area of " + (width * 10) + ", got " + r.getArea());
     }
 
     public static void main(String[] args) {
@@ -21,16 +20,16 @@ public class LiskovSubstitution {
         sq = RectangleFactory.newSquare(10);
         useIt(sq);
 
-        rc = RectangleFactory.newRectangle(2,3);
+        rc = RectangleFactory.newRectangle(2, 3);
         useIt(rc);
     }
 }
 
-class Rectangle
-{
+class Rectangle {
     protected int width, height;
 
-    public Rectangle() {}
+    public Rectangle() {
+    }
 
     public Rectangle(int width, int height) {
         this.width = width;
@@ -53,7 +52,9 @@ class Rectangle
         this.height = height;
     }
 
-    public int getArea() { return (width * height); }
+    public int getArea() {
+        return (width * height);
+    }
 
     @Override
     public String toString() {
@@ -63,14 +64,12 @@ class Rectangle
                 '}';
     }
 
-    public boolean isSquare()
-    {
+    public boolean isSquare() {
         return width == height;
     }
 }
 
-class Square extends Rectangle
-{
+class Square extends Rectangle {
     public Square() {
     }
 
@@ -91,15 +90,12 @@ class Square extends Rectangle
     }
 }
 
-class RectangleFactory
-{
-    public static Rectangle newSquare(int side)
-    {
+class RectangleFactory {
+    public static Rectangle newSquare(int side) {
         return new Rectangle(side, side);
     }
 
-    public static Rectangle newRectangle(int width, int height)
-    {
+    public static Rectangle newRectangle(int width, int height) {
         return new Rectangle(width, height);
     }
 }

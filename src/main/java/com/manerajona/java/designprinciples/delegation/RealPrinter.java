@@ -13,7 +13,7 @@ class Printer {
 
     // create the delegate
     void print() {
-         p.print();  // delegation
+        p.print();  // delegation
     }
 }
 

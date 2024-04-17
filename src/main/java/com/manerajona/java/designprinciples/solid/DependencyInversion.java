@@ -8,8 +8,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class DependencyInversion {
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Person parent = new Person("John");
         Person child1 = new Person("Chris");
         Person child2 = new Person("Matt");
@@ -64,7 +63,7 @@ class Relationships implements RelationshipBrowser {
     }
 
     // Triplet class requires javatuples
-    private List<Triple<Person, Relationship, Person>> relations = new ArrayList<>();
+    private final List<Triple<Person, Relationship, Person>> relations = new ArrayList<>();
 
     public List<Triple<Person, Relationship, Person>> getRelations() {
         return relations;
@@ -82,7 +81,7 @@ class Research {
                 .forEach(ch -> System.out.println("John has a child called " + ch.getValue2().name));
     }*/
 
-    public Research(RelationshipBrowser browser)  {
+    public Research(RelationshipBrowser browser) {
         List<Person> children = browser.findAllChildrenOf("John");
         children.stream().map(child -> "John has a child called " + child.name).forEach(System.out::println);
     }

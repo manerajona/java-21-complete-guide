@@ -6,10 +6,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-class SingleResponsibility
-{
-    public static void main(String[] args) throws Exception
-    {
+class SingleResponsibility {
+    public static void main(String[] args) throws Exception {
         Journal j = new Journal();
         j.addEntry("I cried today");
         j.addEntry("I ate a bug");
@@ -25,19 +23,16 @@ class SingleResponsibility
     }
 }
 
-class Journal
-{
+class Journal {
     private final List<String> entries = new ArrayList<>();
 
     private static int count = 0;
 
-    public void addEntry(String text)
-    {
-        entries.add("" + (++count) + ": " + text);
+    public void addEntry(String text) {
+        entries.add((++count) + ": " + text);
     }
 
-    public void removeEntry(int index)
-    {
+    public void removeEntry(int index) {
         entries.remove(index);
     }
 
@@ -49,27 +44,30 @@ class Journal
     // here we break SRP
     public void save(String filename) throws Exception // anti-pattern
     {
-        try (PrintStream out = new PrintStream(filename))
-        {
-            out.println(toString());
+        try (PrintStream out = new PrintStream(filename)) {
+            out.println(this);
         }
     }
 
-    public void load(String filename) {}  // anti-pattern
-    public void load(URL url) {} // anti-pattern
+    public void load(String filename) {
+    }  // anti-pattern
+
+    public void load(URL url) {
+    } // anti-pattern
 }
 
 // handles the responsibility of persisting objects (separation of concerns)
-class Persistence
-{
-    public void saveToFile(Journal journal,  String filename,  boolean overwrite) throws Exception
-    {
+class Persistence {
+    public void saveToFile(Journal journal, String filename, boolean overwrite) throws Exception {
         if (overwrite || new File(filename).exists())
             try (PrintStream out = new PrintStream(filename)) {
                 out.println(journal.toString());
             }
     }
 
-    public void load(Journal journal, String filename) {}
-    public void load(Journal journal, URL url) {}
+    public void load(Journal journal, String filename) {
+    }
+
+    public void load(Journal journal, URL url) {
+    }
 }
