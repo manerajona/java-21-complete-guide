@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid.liskov;
+package com.manerajona.java.designprinciples.solid.liskov.example1;
 
 abstract class Vehicle {
     abstract int getSpeed();

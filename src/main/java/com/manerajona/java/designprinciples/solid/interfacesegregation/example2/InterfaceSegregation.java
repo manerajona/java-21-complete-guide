@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid;
+package com.manerajona.java.designprinciples.solid.interfacesegregation.example2;
 
 class Document {
 }

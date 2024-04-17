@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid.dependencyinversion;
+package com.manerajona.java.designprinciples.solid.dependencyinversion.example1;
 
 interface DBConnectionInterface {
     int connect();

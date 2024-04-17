@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid;
+package com.manerajona.java.designprinciples.solid.liskov.example2;
 
 public class LiskovSubstitution {
     // maybe conform to ++

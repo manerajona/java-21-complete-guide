@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid.interfacesegregation;
+package com.manerajona.java.designprinciples.solid.interfacesegregation.example1;
 
 public interface ShapeInterface {
     double area();

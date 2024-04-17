@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid;
+package com.manerajona.java.designprinciples.solid.dependencyinversion.example2;
 
 import org.apache.commons.lang3.tuple.Triple;
 

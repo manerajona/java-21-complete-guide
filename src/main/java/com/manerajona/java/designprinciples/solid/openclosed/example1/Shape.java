@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid.openclosed;
+package com.manerajona.java.designprinciples.solid.openclosed.example1;
 
 public interface Shape {
     double calculateArea();

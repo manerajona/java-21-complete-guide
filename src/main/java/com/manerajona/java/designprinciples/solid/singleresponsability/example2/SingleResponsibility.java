@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid;
+package com.manerajona.java.designprinciples.solid.singleresponsability.example2;
 
 import java.io.File;
 import java.io.PrintStream;

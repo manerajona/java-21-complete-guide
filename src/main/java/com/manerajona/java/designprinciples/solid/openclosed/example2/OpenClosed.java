@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid;
+package com.manerajona.java.designprinciples.solid.openclosed.example2;
 
 import java.util.List;
 import java.util.stream.Stream;

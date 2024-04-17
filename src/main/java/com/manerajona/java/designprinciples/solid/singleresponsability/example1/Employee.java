@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid.singleresponsability;
+package com.manerajona.java.designprinciples.solid.singleresponsability.example1;
 
 import java.util.Date;
 

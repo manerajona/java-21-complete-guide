@@ -1,4 +1,4 @@
-package com.manerajona.java.designpatterns.factory;
+package com.manerajona.java.designpatterns.creationals.factory;
 
 public class FactoryMethod {
 
