@@ -1,4 +1,4 @@
-package com.manerajona.java.designpatterns.creationals.factory;
+package com.manerajona.java.designpatterns.creationals.abstractfactory.example1;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.reflections.Reflections;

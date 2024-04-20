@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.solid.interfacesegregation.wrongcase;
+package com.manerajona.java.designprinciples.solid.interfacesegregation.antipattern;
 
 public interface RestaurantInterface {
     void acceptOnlineOrder();
