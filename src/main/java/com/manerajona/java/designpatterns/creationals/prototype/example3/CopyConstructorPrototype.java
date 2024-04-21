@@ -1,22 +1,9 @@
-package com.manerajona.java.designpatterns.creationals.prototype;
-
-class CopyConstructorPrototype {
-
-    public static void main(String[] args) {
-        Employee john = new Employee("John",
-                new Address("123 London Road", "London", "UK"));
-
-        //Employee chris = john;
-        Employee chris = new Employee(john);
-
-        chris.name = "Chris";
-        System.out.println(john);
-        System.out.println(chris);
-    }
-}
+package com.manerajona.java.designpatterns.creationals.prototype.example3;
 
 class Address {
-    public String streetAddress, city, country;
+    private final String streetAddress;
+    private final String city;
+    private final String country;
 
     public Address(String streetAddress, String city, String country) {
         this.streetAddress = streetAddress;
@@ -39,8 +26,8 @@ class Address {
 }
 
 class Employee {
-    public String name;
-    public Address address;
+    private String name;
+    private final Address address;
 
     public Employee(String name, Address address) {
         this.name = name;
@@ -58,5 +45,9 @@ class Employee {
                 "name='" + name + '\'' +
                 ", address=" + address +
                 '}';
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
