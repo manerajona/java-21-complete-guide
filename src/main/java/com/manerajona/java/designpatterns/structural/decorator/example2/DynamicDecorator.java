@@ -1,35 +1,12 @@
-package com.manerajona.java.designpatterns.structural.decorator;
-
-class DynamicDecorator {
-    public static void main(String[] args) {
-        Circle circle = new Circle(10);
-        System.out.println(circle.info());
-
-        ColoredShape blueCircle = new ColoredShape(circle, "blue");
-        System.out.println(blueCircle.info());
-
-        ColoredShape blueSquare = new ColoredShape(new Square(20), "blue");
-        System.out.println(blueSquare.info());
-
-        TransparentShape myCircle = new TransparentShape(new ColoredShape(new Circle(5), "green"), 50);
-        System.out.println(myCircle.info());
-
-        TransparentShape mySquare = new TransparentShape(new Square(5), 50);
-        System.out.println(mySquare.info());
-
-        // cannot call myCircle.resize()
-    }
-}
+package com.manerajona.java.designpatterns.structural.decorator.example2;
 
 interface Shape {
     String info(); // deliberately different from toString
 }
 
 class Circle implements Shape {
-    private float radius;
 
-    public Circle() {
-    }
+    private float radius;
 
     public Circle(float radius) {
         this.radius = radius;
@@ -46,10 +23,8 @@ class Circle implements Shape {
 }
 
 class Square implements Shape {
-    private float side;
 
-    public Square() {
-    }
+    private final float side;
 
     public Square(float side) {
         this.side = side;
@@ -63,10 +38,10 @@ class Square implements Shape {
 
 // we are NOT altering the base class of these objects
 // cannot make ColoredSquare, ColoredCircle
-
 class ColoredShape implements Shape {
-    private Shape shape;
-    private String color;
+
+    private final Shape shape;
+    private final String color;
 
     public ColoredShape(Shape shape, String color) {
         this.shape = shape;
@@ -80,8 +55,9 @@ class ColoredShape implements Shape {
 }
 
 class TransparentShape implements Shape {
-    private Shape shape;
-    private int transparency;
+
+    private final Shape shape;
+    private final int transparency;
 
     public TransparentShape(Shape shape, int transparency) {
         this.shape = shape;

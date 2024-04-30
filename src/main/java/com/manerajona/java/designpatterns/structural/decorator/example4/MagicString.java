@@ -1,19 +1,13 @@
-package com.manerajona.java.designpatterns.structural.decorator;
+package com.manerajona.java.designpatterns.structural.decorator.example4;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Locale;
 import java.util.stream.IntStream;
 
-class StringDecorator {
-    public static void main(String[] args) {
-        MagicString s = new MagicString("hello");
-        System.out.printf("%s has %d vowels%n", s, s.getNumberOfVowels());
-    }
-}
-
 class MagicString {
-    private String string;
+
+    private final String string;
 
     public MagicString(String string) {
         this.string = string;
@@ -67,9 +61,6 @@ class MagicString {
         string.getChars(srcBegin, srcEnd, dst, dstBegin);
     }
 
-    @Deprecated(
-            since = "1.1"
-    )
     public void getBytes(int srcBegin, int srcEnd, byte[] dst, int dstBegin) {
         string.getBytes(srcBegin, srcEnd, dst, dstBegin);
     }

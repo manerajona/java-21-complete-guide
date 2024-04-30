@@ -1,18 +1,10 @@
-package com.manerajona.java.designpatterns.structural.decorator;
+package com.manerajona.java.designpatterns.structural.decorator.example3;
 
 import java.util.stream.IntStream;
 
-class AdapterDecorator {
-    public static void main(String[] args) {
-        MyStringBuilder msb = new MyStringBuilder();
-        msb.append("hello").appendLine(" world");
-        System.out.println(msb.concat("and this too"));
-    }
-}
+class MyStringBuilder {
 
-class MyStringBuilder // extends StringBuilder
-{
-    private StringBuilder sb;
+    private final StringBuilder sb;
 
     public MyStringBuilder() {
         sb = new StringBuilder();
