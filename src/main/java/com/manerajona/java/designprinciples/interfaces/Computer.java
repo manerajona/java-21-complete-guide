@@ -16,7 +16,7 @@ class Projector implements DisplayModule {
     }
 }
 
-public class Computer {
+class Computer {
     private DisplayModule dm;
 
     public void setDisplayModule(DisplayModule dm) {
@@ -25,16 +25,5 @@ public class Computer {
 
     public void display() {
         dm.display();
-    }
-
-    public static void main(String[] args) {
-        Computer computer = new Computer();
-        DisplayModule monitor = new Monitor();
-        DisplayModule project = new Projector();
-
-        computer.setDisplayModule(monitor);
-        computer.display();
-        computer.setDisplayModule(project);
-        computer.display();
     }
 }
