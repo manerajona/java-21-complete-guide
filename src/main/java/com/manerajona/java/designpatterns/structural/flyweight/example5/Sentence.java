@@ -1,24 +1,16 @@
-package com.manerajona.java.designpatterns.structural.flyweight;
+package com.manerajona.java.designpatterns.structural.flyweight.example5;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class FWChallenge {
-    public static void main(String[] args) {
-        Sentence sentence = new Sentence("Make America Great Again");
-        sentence.getWord(0).capitalize = true;
-        sentence.getWord(2).capitalize = true;
-        System.out.println(sentence);
-    }
-}
-
 class Sentence {
-    private List<WordToken> wordTokens = new ArrayList<>();
+
+    private final List<WordToken> wordTokens = new ArrayList<>();
 
     public Sentence(String plainText) {
         for (String s : plainText.split(" ")) {
             WordToken wt = new WordToken(s, false);
-            if (wordTokens.indexOf(wt) == -1) {
+            if (!wordTokens.contains(wt)) {
                 wordTokens.add(wt);
             }
         }
@@ -39,12 +31,17 @@ class Sentence {
     }
 
     static class WordToken {
-        public boolean capitalize;
-        public String word;
+
+        private boolean capitalize;
+        private final String word;
 
         public WordToken(String word, boolean capitalize) {
             this.capitalize = capitalize;
             this.word = word;
+        }
+
+        public void setCapitalize(boolean capitalize) {
+            this.capitalize = capitalize;
         }
     }
 }
