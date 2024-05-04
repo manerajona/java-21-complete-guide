@@ -1,17 +1,4 @@
-package com.manerajona.java.designpatterns.structural.proxy;
-
-class ProtectionProxy {
-    public static void main(String[] args) {
-        Drivable car;
-        {
-            car = new CarProxy(new Driver(12));
-            car.drive(); // WARNING
-
-            car = new CarProxy(new Driver(22));
-            car.drive(); // OK
-        }
-    }
-}
+package com.manerajona.java.designpatterns.structural.proxy.example4;
 
 interface Drivable {
     void drive();
@@ -39,17 +26,13 @@ class CarProxy extends Car {
 
     @Override
     public void drive() {
-        if (driver.age >= 17)
+        if (driver.age() >= 17) {
             super.drive();
-        else
+        } else {
             System.out.println("Driver too young");
+        }
     }
 }
 
-class Driver {
-    public int age;
-
-    public Driver(int age) {
-        this.age = age;
-    }
+record Driver(int age) {
 }

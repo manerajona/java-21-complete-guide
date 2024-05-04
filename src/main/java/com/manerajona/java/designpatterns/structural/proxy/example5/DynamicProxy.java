@@ -1,4 +1,4 @@
-package com.manerajona.java.designpatterns.structural.proxy;
+package com.manerajona.java.designpatterns.structural.proxy.example5;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -6,29 +6,9 @@ import java.lang.reflect.Proxy;
 import java.util.HashMap;
 import java.util.Map;
 
-class DynamicLoggingProxy {
-    @SuppressWarnings("unchecked")
-    public static <T> T withLogging(T target, Class<T> itf) {
-        return (T) Proxy.newProxyInstance(
-                itf.getClassLoader(),
-                new Class<?>[]{itf},
-                new LoggingHandler(target));
-    }
-
-    public static void main(String[] args) {
-        Person person = new Person();
-        Human logged = withLogging(person, Human.class);
-        logged.walk();
-        logged.talk();
-        logged.talk();
-
-        System.out.println(logged);
-    }
-}
-
 class LoggingHandler implements InvocationHandler {
     private final Object target;
-    private Map<String, Integer> calls = new HashMap<>();
+    private final Map<String, Integer> calls = new HashMap<>();
 
     LoggingHandler(Object target) {
         this.target = target;
@@ -41,7 +21,6 @@ class LoggingHandler implements InvocationHandler {
         if (name.contains("toString")) {
             return calls.toString();
         }
-
         // add or increment number of calls
         calls.merge(name, 1, Integer::sum);
         return method.invoke(target, args);
@@ -50,7 +29,6 @@ class LoggingHandler implements InvocationHandler {
 
 interface Human {
     void walk();
-
     void talk();
 }
 
