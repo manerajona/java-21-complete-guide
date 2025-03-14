@@ -1,4 +1,4 @@
-package com.manerajona.java.designprinciples.dependencyinjection;
+package com.manerajona.java.designprinciples.dependencyinjection.basic;
 
 interface Service {
     void write(String message);
