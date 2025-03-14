@@ -1,6 +1,6 @@
 package com.manerajona.java.programming.basics;
 
-public class Values {
+public class Variables {
 
     public static void main(String... args) {
         // int
@@ -59,8 +59,5 @@ public class Values {
         // String
         String myString = "This is a string";
         System.out.printf("My string %s\n", myString);
-
-         
-
     }
 }

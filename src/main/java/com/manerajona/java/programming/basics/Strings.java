@@ -34,8 +34,6 @@ public class Strings {
         } else {
             System.out.println("Invalid Value");
         }
-
         scanner.close();
-
     }
 }

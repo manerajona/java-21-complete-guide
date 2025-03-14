@@ -1,7 +1,6 @@
 package com.manerajona.java.programming.basics;
 
-public class Operators
-{
+public class Operators {
     public static void main(String... args){
 
         // Arithmetical operators
@@ -34,6 +33,5 @@ public class Operators
         if(itWasACar = true) {
             System.out.println("you're assigning and evaluating, now itWasACar is " + itWasACar);
         }
-
     }
 }
