@@ -1,46 +1,6 @@
-package com.manerajona.java.designpatterns.behavioral.strategy;
+package com.manerajona.java.designpatterns.behavioral.strategy.example4;
 
 import java.util.Objects;
-
-interface DiscriminantStrategy {
-    double calculateDiscriminant(double a, double b, double c);
-}
-
-class OrdinaryDiscriminantStrategy implements DiscriminantStrategy {
-    @Override
-    public double calculateDiscriminant(double a, double b, double c) {
-        return b * b - 4 * a * c;
-    }
-}
-
-class RealDiscriminantStrategy implements DiscriminantStrategy {
-    @Override
-    public double calculateDiscriminant(double a, double b, double c) {
-        double result = b * b - 4 * a * c;
-        return result >= 0 ? result : Double.NaN;
-    }
-}
-
-class QuadraticEquationSolver {
-    private DiscriminantStrategy strategy;
-
-    public QuadraticEquationSolver(DiscriminantStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public Pair<Complex, Complex> solve(double a, double b, double c) {
-        double disc = strategy.calculateDiscriminant(a, b, c);
-        Complex rootDisc = Complex.sqrt(disc);
-        return new Pair<>(
-                new Complex(-b, 0).plus(rootDisc)
-                        .divides(new Complex(2, 0))
-                        .divides(new Complex(a, 0)),
-                new Complex(-b, 0).minus(rootDisc)
-                        .divides(new Complex(2, 0))
-                        .divides(new Complex(a, 0))
-        );
-    }
-}
 
 // complex number implementation taken from here:
 // https://introcs.cs.princeton.edu/java/32class/Complex.java.html
@@ -52,6 +12,20 @@ class Complex {
     public Complex(double real, double imag) {
         re = real;
         im = imag;
+    }
+
+    public static Complex sqrt(double value) {
+        if (value < 0)
+            return new Complex(0, Math.sqrt(-value));
+        else
+            return new Complex(Math.sqrt(value), 0);
+    }
+
+    // a static version of plus
+    public static Complex plus(Complex a, Complex b) {
+        double real = a.re + b.re;
+        double imag = a.im + b.im;
+        return new Complex(real, imag);
     }
 
     // return a string representation of the invoking Complex object
@@ -75,9 +49,7 @@ class Complex {
     // return a new Complex object whose value is (this + b)
     public Complex plus(Complex b) {
         Complex a = this;             // invoking object
-        double real = a.re + b.re;
-        double imag = a.im + b.im;
-        return new Complex(real, imag);
+        return plus(a, b);
     }
 
     // return a new Complex object whose value is (this - b)
@@ -142,24 +114,9 @@ class Complex {
         return new Complex(Math.cos(re) * Math.cosh(im), -Math.sin(re) * Math.sinh(im));
     }
 
-    public static Complex sqrt(double value) {
-        if (value < 0)
-            return new Complex(0, Math.sqrt(-value));
-        else
-            return new Complex(Math.sqrt(value), 0);
-    }
-
     // return a new Complex object whose value is the complex tangent of this
     public Complex tan() {
         return sin().divides(cos());
-    }
-
-    // a static version of plus
-    public static Complex plus(Complex a, Complex b) {
-        double real = a.re + b.re;
-        double imag = a.im + b.im;
-        Complex sum = new Complex(real, imag);
-        return sum;
     }
 
     // See Section 3.3.
@@ -177,15 +134,5 @@ class Complex {
 
     public boolean isNaN() {
         return Double.isNaN(re) || Double.isNaN(im);
-    }
-}
-
-class Pair<X, Y> {
-    public final X first;
-    public final Y second;
-
-    public Pair(X first, Y second) {
-        this.first = first;
-        this.second = second;
     }
 }
