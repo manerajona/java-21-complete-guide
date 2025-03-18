@@ -1,4 +1,4 @@
-package com.manerajona.java.designpatterns.behavioral.state;
+package com.manerajona.java.designpatterns.behavioral.state.example3;
 
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.config.StateMachineBuilder;
@@ -6,16 +6,15 @@ import org.springframework.statemachine.state.State;
 import org.springframework.statemachine.transition.Transition;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-// plural because SSM defines a class called State already
 enum States {
-    OFF_HOOK, // starting
-    ON_HOOK, // terminal
+    OFF_HOOK,   // starting
+    ON_HOOK,    // terminal
     CONNECTING,
     CONNECTED,
     ON_HOLD
@@ -33,15 +32,16 @@ enum Events {
 
 class SpringStateMachine {
 
-    public static StateMachine<States, Events> buildMachine() throws Exception {
-
+    static StateMachine<States, Events> buildMachine() throws Exception {
         StateMachineBuilder.Builder<States, Events> builder = StateMachineBuilder.builder();
 
+        // Configure states: initial and all states
         builder.configureStates()
                 .withStates()
                 .initial(States.OFF_HOOK)
                 .states(EnumSet.allOf(States.class));
 
+        // Configure transitions
         builder.configureTransitions()
                 .withExternal()
                 .source(States.OFF_HOOK)
@@ -76,7 +76,7 @@ class SpringStateMachine {
                 .withExternal()
                 .source(States.CONNECTED)
                 .event(Events.PLACED_ON_HOLD)
-                .target(States.OFF_HOOK)
+                .target(States.ON_HOLD)
                 .and()
                 .withExternal()
                 .source(States.ON_HOLD)
@@ -95,45 +95,54 @@ class SpringStateMachine {
         StateMachine<States, Events> machine = buildMachine();
         machine.start();
 
-        States exitState = States.ON_HOOK;
+        final States exitState = States.ON_HOOK;
 
-        BufferedReader console = new BufferedReader(
-                new InputStreamReader(System.in)
-        );
+        try (BufferedReader console = new BufferedReader(new InputStreamReader(System.in))) {
+            while (machine.getState().getId() != exitState) {
+                State<States, Events> currentState = machine.getState();
+                System.out.println("The phone is currently " + currentState.getId());
+                System.out.println("Select a trigger:");
 
-        // End while
-        do {
-            State<States, Events> state = machine.getState();
+                // Get possible transitions from the current state
+                List<Transition<States, Events>> transitions = machine.getTransitions()
+                        .stream()
+                        .filter(t -> t.getSource() == currentState)
+                        .toList();
 
-            System.out.println("The phone is currently " + state.getId());
-            System.out.println("Select a trigger:");
+                IntStream.range(0, transitions.size())
+                        .mapToObj(i -> String.format("(%d) %s", i, transitions.get(i).getTrigger().getEvent()))
+                        .forEach(System.out::println);
 
-            List<Transition<States, Events>> ts = machine.getTransitions()
-                    .stream()
-                    .filter(t -> t.getSource() == state)
-                    .collect(Collectors.toList());
+                // Retrieve a valid user choice
+                int choice = getUserChoice(console, transitions.size());
 
-            IntStream.range(0, ts.size())
-                    .mapToObj(i -> String.format("%d. %s", i, ts.get(i).getTrigger().getEvent()))
-                    .forEach(System.out::println);
-
-            boolean parseOK;
-            int choice = 0;
-            do {
-                try {
-                    System.out.println("Please enter your choice:");
-                    choice = Integer.parseInt(console.readLine());
-                    parseOK = choice >= 0 && choice < ts.size();
-                } catch (Exception e) {
-                    parseOK = false;
-                }
-            } while (!parseOK);
-
-            // perform the transition
-            machine.sendEvent(ts.get(choice).getTrigger().getEvent());
-
-        } while (machine.getState().getId() != exitState);
-
+                // Send the chosen event to perform the transition
+                machine.sendEvent(transitions.get(choice).getTrigger().getEvent());
+            }
+        }
         System.out.println("And we are done!");
+    }
+
+    /**
+     * Reads and validates the user's choice.
+     *
+     * @param console    The BufferedReader for input.
+     * @param maxOptions The number of available options.
+     * @return A valid choice index.
+     */
+    private static int getUserChoice(BufferedReader console, int maxOptions) {
+        while (true) {
+            try {
+                System.out.print("Please enter your choice: ");
+                int choice = Integer.parseInt(console.readLine());
+                if (choice >= 0 && choice < maxOptions) {
+                    return choice;
+                } else {
+                    System.out.println("Invalid choice. Please choose a number between 0 and " + (maxOptions - 1) + ".");
+                }
+            } catch (NumberFormatException | IOException ex) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
     }
 }
