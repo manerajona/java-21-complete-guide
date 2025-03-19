@@ -2,7 +2,7 @@ package com.manerajona.java.designprinciples.solid.singleresponsability.example1
 
 import java.util.Date;
 
-public class Employee {
+class Employee {
     private String employeeId;
     private String name;
     private String address;

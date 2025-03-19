@@ -1,6 +1,7 @@
 package com.manerajona.java.designprinciples.solid.singleresponsability.example2;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -9,10 +10,11 @@ import java.util.List;
 class Journal {
     private final List<String> entries = new ArrayList<>();
 
-    private static int count = 0;
+    private int count = 0;
 
     public void addEntry(String text) {
-        entries.add((++count) + ": " + text);
+        ++count;
+        entries.add(count + ": " + text);
     }
 
     public void removeEntry(int index) {
@@ -25,7 +27,7 @@ class Journal {
     }
 
     // here we break SRP
-    public void save(String filename) throws Exception // anti-pattern
+    public void save(String filename) throws FileNotFoundException // anti-pattern
     {
         try (PrintStream out = new PrintStream(filename)) {
             out.println(this);
@@ -41,7 +43,7 @@ class Journal {
 
 // handles the responsibility of persisting objects (separation of concerns)
 class Persistence {
-    public void saveToFile(Journal journal, String filename, boolean overwrite) throws Exception {
+    public void saveToFile(Journal journal, String filename, boolean overwrite) throws FileNotFoundException {
         if (overwrite || new File(filename).exists())
             try (PrintStream out = new PrintStream(filename)) {
                 out.println(journal.toString());

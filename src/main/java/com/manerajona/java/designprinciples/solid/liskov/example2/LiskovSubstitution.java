@@ -1,7 +1,8 @@
 package com.manerajona.java.designprinciples.solid.liskov.example2;
 
 class Rectangle {
-    protected int width, height;
+    protected int width;
+    protected int height;
 
     public Rectangle() {
     }
@@ -66,11 +67,15 @@ class Square extends Rectangle {
 }
 
 class RectangleFactory {
-    public static Rectangle newSquare(int side) {
+
+    private RectangleFactory() {
+    }
+
+    public static Rectangle createSquare(int side) {
         return new Rectangle(side, side);
     }
 
-    public static Rectangle newRectangle(int width, int height) {
+    public static Rectangle createRectangle(int width, int height) {
         return new Rectangle(width, height);
     }
 }

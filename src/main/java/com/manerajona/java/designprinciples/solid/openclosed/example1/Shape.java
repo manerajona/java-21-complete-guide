@@ -1,23 +1,22 @@
 package com.manerajona.java.designprinciples.solid.openclosed.example1;
 
-public interface Shape {
+interface Shape {
     double calculateArea();
 }
 
-class Rectangle implements Shape {
-    public double length;
-    public double width;
+record Rectangle(double length, double width) implements Shape {
 
+    @Override
     public double calculateArea() {
         return length * width;
     }
 }
 
-class Circle implements Shape {
-    public double radius;
+record Circle(double radius) implements Shape {
 
+    @Override
     public double calculateArea() {
-        return ((double) 22 / 7) * radius * radius;
+        return 3.142857142857143 * radius * radius;
     }
 }
 

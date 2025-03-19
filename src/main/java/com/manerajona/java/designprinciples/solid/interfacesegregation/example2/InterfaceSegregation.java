@@ -1,6 +1,8 @@
 package com.manerajona.java.designprinciples.solid.interfacesegregation.example2;
 
-class Document {
+import java.io.IOException;
+
+record Document(String content) {
 }
 
 /*
@@ -10,9 +12,9 @@ class Document {
 interface Machine {
     void print(Document d);
 
-    void fax(Document d) throws Exception;
+    void fax(Document d) throws IOException;
 
-    void scan(Document d) throws Exception;
+    void scan(Document d) throws IOException;
 }
 
 // ok if you need a multifunction machine
@@ -35,12 +37,12 @@ class OldFashionedPrinter implements Machine {
         // yep
     }
 
-    public void fax(Document d) throws Exception {
-        throw new Exception();
+    public void fax(Document d) throws IOException {
+        throw new IOException();
     }
 
-    public void scan(Document d) throws Exception {
-        throw new Exception();
+    public void scan(Document d) throws IOException {
+        throw new IOException();
     }
 }
 
@@ -49,49 +51,48 @@ class OldFashionedPrinter implements Machine {
  */
 
 interface Printer {
-    void Print(Document d) throws Exception;
+    void print(Document d) throws IOException;
 }
 
-interface IScanner {
-    void Scan(Document d) throws Exception;
+interface Scanner {
+    void scan(Document d) throws IOException;
 }
 
 class JustAPrinter implements Printer {
-    public void Print(Document d) {
+    public void print(Document d) {
 
     }
 }
 
-class Photocopier implements Printer, IScanner {
-    public void Print(Document d) throws Exception {
-        throw new Exception();
+class Photocopier implements Printer, Scanner {
+    public void print(Document d) throws IOException {
+        throw new IOException();
     }
 
-    public void Scan(Document d) throws Exception {
-        throw new Exception();
+    public void scan(Document d) throws IOException {
+        throw new IOException();
     }
 }
 
-interface MultiFunctionDevice extends Printer, IScanner //
-{
+interface MultiFunctionDevice extends Printer, Scanner {
 
 }
 
 class MultiFunctionMachine implements MultiFunctionDevice {
     // compose this out of several modules
     private final Printer printer;
-    private final IScanner scanner;
+    private final Scanner scanner;
 
-    public MultiFunctionMachine(Printer printer, IScanner scanner) {
+    public MultiFunctionMachine(Printer printer, Scanner scanner) {
         this.printer = printer;
         this.scanner = scanner;
     }
 
-    public void Print(Document d) throws Exception {
-        printer.Print(d);
+    public void print(Document d) throws IOException {
+        printer.print(d);
     }
 
-    public void Scan(Document d) throws Exception {
-        scanner.Scan(d);
+    public void scan(Document d) throws IOException {
+        scanner.scan(d);
     }
 }

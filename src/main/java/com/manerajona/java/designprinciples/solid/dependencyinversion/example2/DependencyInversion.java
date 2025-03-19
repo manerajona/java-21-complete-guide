@@ -4,8 +4,6 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 // A. High-level modules should not depend on low-level modules.
 // Both should depend on abstractions.
@@ -19,13 +17,7 @@ enum Relationship {
     SIBLING
 }
 
-class Person {
-    public String name;
-    // dob etc.
-
-    public Person(String name) {
-        this.name = name;
-    }
+record Person(String name) {
 }
 
 interface RelationshipBrowser {
@@ -34,40 +26,41 @@ interface RelationshipBrowser {
 
 class Relationships implements RelationshipBrowser {
 
+    // Triplet class requires javatuples
+    private final List<Triple<Person, Relationship, Person>> relations = new ArrayList<>();
+
+    public List<Triple<Person, Relationship, Person>> getRelations() {
+        return List.copyOf(relations);
+    }
+
     public void addParentAndChild(Person parent, Person child) {
         relations.add(Triple.of(parent, Relationship.PARENT, child));
         relations.add(Triple.of(child, Relationship.CHILD, parent));
     }
 
+    @Override
     public List<Person> findAllChildrenOf(String name) {
-        return relations
-                .stream()
-                .filter(x -> Objects.equals(x.getLeft().name, name) && x.getMiddle() == Relationship.PARENT)
+        return relations.stream()
+                .filter(tuple -> tuple.getLeft().name().equals(name) && tuple.getMiddle().equals(Relationship.PARENT))
                 .map(Triple::getRight)
-                .collect(Collectors.toList());
-    }
-
-    // Triplet class requires javatuples
-    private final List<Triple<Person, Relationship, Person>> relations = new ArrayList<>();
-
-    public List<Triple<Person, Relationship, Person>> getRelations() {
-        return relations;
+                .toList();
     }
 }
 
 class Research {
-    /*public Research(Relationships relationships) {
-        List<Triplet<Person, Relationship, Person>> relations = relationships.getRelations();
 
-        // high-level: find all of john's children
-        relations
-                .stream()
-                .filter(x -> x.getValue0().name.equals("John") && x.getValue1() == Relationship.PARENT)
-                .forEach(ch -> System.out.println("John has a child called " + ch.getValue2().name));
-    }*/
+    // high-level: find all of john's children
+    public Research(String name, Relationships relationships) {
+        relationships.getRelations().stream()
+                .filter(tuple -> tuple.getLeft().name().equals(name) && tuple.getMiddle().equals(Relationship.PARENT))
+                .map(child -> "%s has a child called %s".formatted(name, child.getRight().name()))
+                .forEach(System.out::println);
+    }
 
-    public Research(RelationshipBrowser browser) {
-        List<Person> children = browser.findAllChildrenOf("John");
-        children.stream().map(child -> "John has a child called " + child.name).forEach(System.out::println);
+    // low-level: find all of john's children
+    public Research(String name, RelationshipBrowser browser) {
+        browser.findAllChildrenOf(name).stream()
+                .map(child -> "%s has a child called %s".formatted(name, child.name()))
+                .forEach(System.out::println);
     }
 }

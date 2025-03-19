@@ -11,6 +11,10 @@ public class Main {
         relationships.addParentAndChild(parent, child1);
         relationships.addParentAndChild(parent, child2);
 
-        new Research(relationships);
+        // high-level: find all of john's children
+        new Research("John", relationships);
+
+        // low-level: find all of john's children
+        new Research("John", (RelationshipBrowser) relationships);
     }
 }
